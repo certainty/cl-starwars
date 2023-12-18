@@ -5,20 +5,20 @@
 (setf (ningle:route *api* "/people")
       (lambda (params)
         (declare (ignorable params))
-        (success '(((name . "John") (age . 30))
+        (succeed '(((name . "John") (age . 30))
                    ((name . "Mary") (age . 25))))))
 
 (setf (ningle:route *api* "/people/:id")
       (lambda (params)
         (declare (ignorable params))
-        (failure "not-found"
-                 "The requested person could not be found"
-                 :status 404)))
+        (fail "not-found"
+              "The requested person could not be found"
+              :status 404)))
 
-(defun success (object &key (status 200))
+(defun succeed (object &key (status 200))
   (json-response object :status status))
 
-(defun failure (id description &key (details nil) (status 400))
+(defun fail (id description &key (details nil) (status 400))
   (json-response
    `((id . ,id)
      (description . ,description)
